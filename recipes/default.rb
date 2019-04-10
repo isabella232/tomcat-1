@@ -195,6 +195,11 @@ service 'tomcat' do
     service_name "tomcat#{node['tomcat']['base_version']}"
   end
   action [:start, :enable]
+  start_command 'service tomcat7 start'
+  stop_command 'service tomcat7 stop'
+  restart_command 'service tomcat7 restart'
+  reload_command 'service tomcat7 force-reload'
+  status_command 'service tomcat7 status'
   notifies :run, 'execute[wait for tomcat]', :immediately
   retries 4
   retry_delay 30
