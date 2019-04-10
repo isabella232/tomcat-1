@@ -70,8 +70,13 @@ unless node['tomcat']['deploy_manager_apps']
   end
 end
 
-node.set_unless['tomcat']['keystore_password'] = secure_password
-node.set_unless['tomcat']['truststore_password'] = secure_password
+if node['tomcat']['keystore_password'].nil?
+  node.default['tomcat']['keystore_password'] = secure_password
+end
+
+if node['tomcat']['truststore_password'].nil?
+  node.default['tomcat']['truststore_password'] = secure_password
+end
 
 unless node['tomcat']['truststore_file'].nil?
   java_options = node['tomcat']['java_options'].to_s
